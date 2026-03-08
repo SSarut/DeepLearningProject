@@ -1,0 +1,11 @@
+{
+  "effect_monster": 0,
+  "fusion_monster": 1,
+  "link_monster": 2,
+  "normal_monster": 3,
+  "ritual_monster": 4,
+  "spell_card": 5,
+  "synchro_monster": 6,
+  "trap_card": 7,
+  "xyz_monster": 8
+}
