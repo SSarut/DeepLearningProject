@@ -6,8 +6,8 @@ WORKDIR /app
 
 # Install system dependencies needed for OpenCV and Torch on ARM/Slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libglib2.0-0 \
-    libgl1-mesa-glx \
+    libglib2.0-0t64 \
+    libgl1 \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
