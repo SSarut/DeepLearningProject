@@ -4,10 +4,10 @@ https://drive.google.com/drive/folders/17b0KGZ6-bqh9Hh-biAbiDLO3msndEnfE?usp=sha
 
 # Augmentation Algorithm
 
-##Function 1 — augment_rotate_scale_noise
+## Function 1 — augment_rotate_scale_noise
 Character: clean geometry variation with colour correction and sensor noise
 
-###Card BGRA
+### Card BGRA
   * White Balance Shift     (simulate camera colour temperature)
   * Colour Jitter           (hue ±30°, sat 0.7–1.3, channel ±30)
   * Brightness/Contrast     (alpha 0.7–1.3, beta ±40)
@@ -24,10 +24,10 @@ rand_list : [angle, scale, blur_sigma, sigma]
 
 ---
 
-##Function 2 — augment_3d_warp_noise
+## Function 2 — augment_3d_warp_noise
 Character: 3D camera angle with physical card imperfection and glare
 
-###Card BGRA
+### Card BGRA
   * White Balance Shift
   * Brightness/Contrast     (alpha 0.6–1.4, beta ±50)
   * Card Warp               (amplitude 3–12, frequency 0.5–1.5, sine bend)
@@ -45,10 +45,10 @@ rand_list : [tilt, warp_seed, blur_sigma, sigma]
 
 ---
 
-##Function 3 — augment_rotate_partial
+## Function 3 — augment_rotate_partial
 Character: occlusion/framing with strongest colour stress
 
-###Card BGRA
+### Card BGRA
   * White Balance Shift
   * Colour Jitter           (hue ±60°, sat 0.4–1.6, channel ±60) ← strongest
   * Brightness/Contrast     (alpha 0.7–1.3, beta ±40)
@@ -63,10 +63,10 @@ rand_list : [angle, visibility]
 
 
 ---
-##Function 4 — augment_3d_partial
+## Function 4 — augment_3d_partial
 Character: 3D angle with occlusion and dramatic lighting
 
-###Card BGRA
+### Card BGRA
   * White Balance Shift
   * Brightness/Contrast     (alpha 0.5–1.5, beta ±60) ← strongest
   * Square Canvas
@@ -81,10 +81,10 @@ rand_list : [tilt, visibility]
 
 ---
 
-##Function 5 — augment_colour_stress
+## Function 5 — augment_colour_stress
 Character: extreme colour destruction, forces model to learn frame shape not colour
 
-###Card BGRA
+### Card BGRA
   * White Balance Shift     (±0.4, widest range)
   * Colour Jitter           (hue ±60°, sat 0.3–1.7, channel ±60)
   * Brightness/Contrast     (alpha 0.5–1.5, beta ±60)
