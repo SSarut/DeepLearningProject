@@ -4,20 +4,30 @@ import json
 from PIL import Image
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 from app.models.resnet import ResNet34_Gradual_Unfreezing
+from app.models.mobilenetv3small import MobileNetV3Small
 import cv2
 import numpy as np
 from app.augment.card_augmentation import (
     augment_rotate_scale_noise,
     augment_3d_warp_noise,
     augment_rotate_partial,
-    augment_3d_partial
+    augment_3d_partial,
+    augment_3d_partialv2,
+    augment_3d_warp_noisev2,
+    augment_colour_stressv2,
+    augment_rotate_partialv2,
+    augment_rotate_scale_noisev2
 )
 
-# Model configuration dictionary
 MODELS_CONFIG = {
-    "resnet34": {
+    "ResNet34DigitalCardOnly": {
         "class": ResNet34_Gradual_Unfreezing,
         "weight_path": os.path.join(os.path.dirname(__file__), "weights", "resnet34_v1_best.pth"),
+        "num_classes": 9
+    },
+    "MobileNetV3SmallIRLDomainAdapt": {
+        "class": MobileNetV3Small,
+        "weight_path": os.path.join(os.path.dirname(__file__), "weights", "digital_to_irl_95.pth"),
         "num_classes": 9
     }
 }
@@ -31,15 +41,12 @@ def get_model(model_name: str):
     weight_path = config["weight_path"]
     num_classes = config["num_classes"]
     
-    # Initialize model
     model = model_class(num_classes=num_classes)
     
-    # Load weights
     weight_dict = torch.load(weight_path, map_location='cpu')
     if 'model_state_dict' in weight_dict:
         weight_dict = weight_dict['model_state_dict']
     
-    # The weights have 'backbone.' prefix, load them directly into the wrapper model
     model.load_state_dict(weight_dict, strict=True)
     model.eval()
     return model
@@ -74,9 +81,14 @@ def augment_image_variants(image_path: str, output_dir: str):
         ("rotate_scale_noise", augment_rotate_scale_noise),
         ("3d_warp_noise", augment_3d_warp_noise),
         ("rotate_partial", augment_rotate_partial),
-        ("3d_partial", augment_3d_partial)
+        ("3d_partial", augment_3d_partial),
+        ("rotate_scale_noisev2", augment_rotate_scale_noisev2),
+        ("3d_warp_noisev2", augment_3d_warp_noisev2),
+        ("rotate_partialv2", augment_rotate_partialv2),
+        ("3d_partialv2", augment_3d_partialv2),
+        ("colour_stressv2", augment_colour_stressv2)
     ]
-    
+ 
     for suffix, fn in augment_fns:
         try:
             # The augmentation functions expect a path and return (image_bgr, rand_list, metadata)
@@ -86,7 +98,7 @@ def augment_image_variants(image_path: str, output_dir: str):
             variant_paths.append(variant_path)
         except Exception as e:
             print(f"Error augmenting with {suffix}: {e}")
-            
+
     return variant_paths
 
 # Keep existing load_weights for compatibility if needed, but updated get_model is preferred
