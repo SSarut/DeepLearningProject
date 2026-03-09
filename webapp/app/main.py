@@ -9,16 +9,13 @@ from app.helpers import MODELS_CONFIG
 
 app = FastAPI(title="DL Model WebApp API")
 
-# Path resolution
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # webapp/app
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 UPLOAD_DIR = os.path.join(os.path.dirname(BASE_DIR), "uploads")
 
-# Ensure directories exist for mounting
 os.makedirs(STATIC_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# Serve static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.get("/")
@@ -33,7 +30,6 @@ async def get_models():
 async def get_class_mapping():
     return FileResponse(os.path.join(STATIC_DIR, "resnet34_v1_class_mapping.json"))
 
-# Serve uploaded images for preview
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 @app.post("/predict")
