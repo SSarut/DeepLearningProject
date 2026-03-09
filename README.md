@@ -2,6 +2,11 @@
 Such as weights, presentation slide. dataset can be found here:
 https://drive.google.com/drive/folders/17b0KGZ6-bqh9Hh-biAbiDLO3msndEnfE?usp=sharing
 
+Student ID:
+65010700
+65010966
+65011019
+
 # Augmentation Algorithm
 
 ## Function 1 — augment_rotate_scale_noise
